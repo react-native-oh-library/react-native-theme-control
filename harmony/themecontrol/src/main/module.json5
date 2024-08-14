@@ -1,0 +1,7 @@
+{
+  module: {
+    name: 'themecontrol',
+    type: 'har',
+    deviceTypes: ['default'],
+  },
+}

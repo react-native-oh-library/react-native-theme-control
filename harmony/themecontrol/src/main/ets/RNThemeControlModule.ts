@@ -28,6 +28,7 @@ import { ConfigurationConstant } from '@kit.AbilityKit';
 import { appRecovery } from '@kit.AbilityKit';
 import { preferences } from '@kit.ArkData';
 import { TurboModule } from '@rnoh/react-native-openharmony/ts';
+import logger from './Logger';
 import type { TM } from '@rnoh/react-native-openharmony/generated/ts';
 
 interface themeType {
@@ -45,21 +46,22 @@ export class RNThemeControlModule extends TurboModule implements TM.RNThemeContr
   public static THEME_ENTRY_KEY = 'ThemeControlModuleEntry';
   public static NAME = 'RNThemeControl';
 
+
   constructor(ctx) {
     super(ctx);
   }
 
   public static recoverApplicationTheme(context: common.Context): number {
-    let dataPreferences: preferences.Preferences | null = null;
-    dataPreferences = preferences.getPreferencesSync(context, {name: RNThemeControlModule.NAME});
-    const mode: ConfigurationConstant.ColorMode = dataPreferences.getSync(RNThemeControlModule.THEME_ENTRY_KEY,
-      ConfigurationConstant.ColorMode.COLOR_MODE_NOT_SET) as ConfigurationConstant.ColorMode;
-    RNThemeControlModule.forceTheme(context, mode as number);
-    return mode as number;
+    const dataPreferences: preferences.Preferences | null =
+      preferences.getPreferencesSync(context, { name: RNThemeControlModule.NAME });
+    const mode: number = Number(dataPreferences.getSync(RNThemeControlModule.THEME_ENTRY_KEY,
+      ConfigurationConstant.ColorMode.COLOR_MODE_NOT_SET));
+    RNThemeControlModule.forceTheme(context, mode);
+    return mode;
   }
 
   public static forceTheme(context: common.Context, forcedMode: number): void {
-    context.getApplicationContext().setColorMode(forcedMode as ConfigurationConstant.ColorMode);
+    context.getApplicationContext().setColorMode(forcedMode);
   }
 
   public getThemePreference(): string {
@@ -69,19 +71,19 @@ export class RNThemeControlModule extends TurboModule implements TM.RNThemeContr
   }
 
   public setNavbarAppearance(params: Record<string, number | string | null>): Promise<null> {
-    let windowClass: window.Window;
     const context: common.UIAbilityContext = this.ctx.uiAbilityContext;
     const bgColor: number | string | null = params.backgroundColor ?? params.backgroundColor;
     const barStyle: number | string | null = params.barStyle ?? params.barStyle;
 
     window.getLastWindow(context, (getLastWindowErr: BusinessError, data) => {
-      windowClass = data;
+      const windowClass: window.Window = data;
       if (bgColor !== null) {
         const systemBarProperties: window.SystemBarProperties = {
           navigationBarColor: `#${bgColor.toString(16).substring(2)}`,
         };
         windowClass.setWindowSystemBarProperties(systemBarProperties);
-      };
+      }
+      ;
       const windowStage: window.WindowStage | undefined = context.windowStage;
       windowStage.getMainWindow((getMainWindowErr: BusinessError) => {
         const isLayoutFullScreen: boolean = barStyle === 'dark-content';
@@ -93,18 +95,19 @@ export class RNThemeControlModule extends TurboModule implements TM.RNThemeContr
   }
 
   public setAppBackground(options: Record<string, number | null>): Promise<boolean> {
-    const appBackground = options.appBackground ?? options.appBackground;
-    let windowClass: window.Window;
+    const appBackground : number | string | null = options.appBackground ?? options.appBackground;
     const context: common.UIAbilityContext = this.ctx.uiAbilityContext;
-    window.getLastWindow(context). then(res=> {
+    const windowClass: window.Window = null
+    window.getLastWindow(context).then(res => {
       res.setWindowBackgroundColor(`#${appBackground.toString(16).substring(2)}`);
-    }).catch((getLastWindowErr:BusinessError) =>{
+    }).catch((getLastWindowErr: BusinessError) => {
+      logger.error(`Failed to set the background color + ${getLastWindowErr}`)
     });
     return new Promise((resolve) => resolve(Boolean(windowClass?.getWindowDecorHeight())));
   }
 
   public setTheme(style: string, options: Record<string, boolean | undefined>): Promise<null> {
-    const mode = this.stringToMode(style);
+    const mode: ConfigurationConstant.ColorMode = this.stringToMode(style);
     if (options.persistTheme || options.restartActivity) {
       this.persistTheme(mode);
     }
@@ -113,8 +116,8 @@ export class RNThemeControlModule extends TurboModule implements TM.RNThemeContr
   }
 
   private persistTheme(mode: ConfigurationConstant.ColorMode): void {
-    let dataPreferences: preferences.Preferences | null = null;
-    dataPreferences = preferences.getPreferencesSync(this.ctx.uiAbilityContext, {name: RNThemeControlModule.NAME});
+    const  dataPreferences: preferences.Preferences | null =
+      preferences.getPreferencesSync(this.ctx.uiAbilityContext, { name: RNThemeControlModule.NAME });
     dataPreferences.putSync(RNThemeControlModule.THEME_ENTRY_KEY, mode);
     dataPreferences.flush();
   }

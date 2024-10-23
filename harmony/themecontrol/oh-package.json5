@@ -3,7 +3,7 @@
   "types": "",
   "devDependencies": {
   },
-  "name": "themecontrol",
+  "name": "@react-native-oh-tpl/react-native-theme-control",
   "description": "",
   "main": "Index.ets",
   "version": "0.0.1",

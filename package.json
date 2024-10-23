@@ -144,5 +144,12 @@
     "android": {
       "javaPackageName": "eu.reactnativetraining"
     }
+  },
+  "harmony": {
+    "codegenConfig": {
+      "specPaths": [
+        "./src"
+      ]
+    }
   }
 }

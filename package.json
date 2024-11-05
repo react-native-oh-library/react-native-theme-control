@@ -88,14 +88,10 @@
   "files": [
     "src",
     "lib",
-    "android",
     "harmony",
-    "ios",
     "cpp",
     "react-native-theme-control.podspec",
     "!lib/typescript/example",
-    "!android/build",
-    "!ios/build",
     "!**/__tests__",
     "!**/__fixtures__",
     "!**/__mocks__",
@@ -140,12 +136,10 @@
   "codegenConfig": {
     "name": "RNThemeControlCGen",
     "type": "modules",
-    "jsSrcsDir": "src/spec",
-    "android": {
-      "javaPackageName": "eu.reactnativetraining"
-    }
+    "jsSrcsDir": "src/spec"
   },
   "harmony": {
+    "alias": "react-native-theme-control",
     "codegenConfig": {
       "specPaths": [
         "./src"

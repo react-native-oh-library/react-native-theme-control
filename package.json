@@ -1,6 +1,6 @@
 {
   "name": "@react-native-oh-tpl/react-native-theme-control",
-  "version": "6.0.1-1.0.2",
+  "version": "6.0.1-1.0.3",
   "description": "control the platform theme from react native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -76,7 +76,7 @@
     "typescript": "^5.4.5"
   },
   "peerDependencies": {
-    "@vonovak/react-native-theme-control":"^6.0.1",
+    "@vonovak/react-native-theme-control": "^6.0.1",
     "expo": ">=49.0.0",
     "react": "*",
     "react-native": ">=0.72.0"
@@ -140,7 +140,7 @@
     "jsSrcsDir": "src/spec"
   },
   "harmony": {
-    "alias":"@vonovak/react-native-theme-control",
+    "alias": "@vonovak/react-native-theme-control",
     "codegenConfig": {
       "specPaths": [
         "./src"

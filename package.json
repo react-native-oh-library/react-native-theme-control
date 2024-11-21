@@ -76,6 +76,7 @@
     "typescript": "^5.4.5"
   },
   "peerDependencies": {
+    "@vonovak/react-native-theme-control":"^6.0.1",
     "expo": ">=49.0.0",
     "react": "*",
     "react-native": ">=0.72.0"
@@ -139,7 +140,7 @@
     "jsSrcsDir": "src/spec"
   },
   "harmony": {
-    "alias": "react-native-theme-control",
+    "alias":"@vonovak/react-native-theme-control",
     "codegenConfig": {
       "specPaths": [
         "./src"

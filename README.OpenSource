@@ -1,0 +1,11 @@
+[
+    {
+        "Name": "react-native-theme-control",
+        "License": "MIT License",
+        "License File": "https://github.com/vonovak/react-native-theme-control/blob/main/LICENSE",
+        "Version Number": "6.0.1",
+        "Owner" : "xiafeng@huawei.com",
+        "Upstream URL": "https://github.com/vonovak/react-native-theme-control",
+        "Description": "control the platform theme from react native"
+    }
+]
